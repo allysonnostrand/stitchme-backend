@@ -1,4 +1,3 @@
-const Project = require('../../models/Project');
 const { User, Project } = require('../models');
 
 module.exports = {
@@ -22,8 +21,7 @@ module.exports = {
     getSingleUser(req, res) {
       User.findOne({ _id: req.params.userId })
         .select('-__v')
-        .populate('thoughts')
-        .populate('friends')
+        .populate('projects')
         .then(async (user) =>
           !user
             ? res.status(404).json({ message: 'No user with that ID' })
