@@ -1,5 +1,5 @@
 const connection = require('../config/connection');
-const { User, Project } = require('../models');
+const { User, Project, Image } = require('../models');
 
 connection.on('error', (err) => err);
 
@@ -11,6 +11,8 @@ connection.once('open', async () => {
 
   await Project.deleteMany({});
 
+  await Image.deleteMany({});
+  
   const users = [
       {
           username: 'test1',
