@@ -1,4 +1,6 @@
 const { User, Project } = require('../models');
+const bcrypt  = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
 
@@ -41,6 +43,41 @@ module.exports = {
         .then((user) => res.json(user))
         .catch((err) => res.status(500).json(err));
     },
+
+    //login a user 
+    loginUser (req, res) {
+      User.findOne({username:req.body.username}).then(dbUser=>{
+        if(!dbUser){
+          console.log("no user")
+            return res.status(403).send("invalid credentials")
+        } 
+        if (bcrypt.compareSync(req.body.password,dbUser.password)) {
+          //creating the token 
+            const token = jwt.sign(
+              //data to include.  NOTE: jwts are encoded, not encrypted.  Meaning, the can easily be decoded.  Dont put sensitive data in here
+              {
+                username: dbUser.username,
+                id: dbUser.id
+              },
+              //secret string to verify signature.  should be an env variable for saftey
+              process.env.JWT_SECRET,
+              //options object, expiresIn says how long the token is valid for.  Takes a string
+              {
+                expiresIn: "2h"
+              }
+            );
+            res.json({ 
+                token: token, 
+                user: dbUser
+            });
+          } else {
+            return res.status(403).send("invalid credentials");
+          }
+    }).catch(err=>{
+        console.log(err)
+        res.status(500).json({msg:"an error occured",err})
+    })
+},
 
     // Delete a user and remove their projects
     deleteUser(req, res) {
