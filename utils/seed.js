@@ -11,7 +11,7 @@ connection.once('open', async () => {
 
   await Project.deleteMany({});
 
-  await Image.deleteMany({});
+  // await Image.deleteMany({});
   
   const users = [
       {
