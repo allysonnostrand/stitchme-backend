@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const imageSchema = require('./Image')
-const todoSchema = require('/Todo')
-const stepSchema = require('/Step')
+const todoSchema = require('./Todo')
+const stepSchema = require('./Step')
 
 const projectSchema = new Schema({
     title: {type: String,

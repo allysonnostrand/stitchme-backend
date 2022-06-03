@@ -5,12 +5,10 @@ const imageSchema = new Schema({
         default: () => new Types.ObjectId()},
     
     imageText:  {type: String,
-        required: true,
         maxlength: 280},
 
     imageURL:  {type: String,
-        required: true,
-        unique: true},
+        required: true},
 
     username: {type: String,
         ref: 'user',
