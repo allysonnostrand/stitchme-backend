@@ -12,13 +12,19 @@ const {
 // /api/projects
 router.route('/').get(getProjects).post(createProject);
 
-// /api/thoughts/:thoughtId
+// /api/projects/:projectId
 router.route('/:projectId').get(getSingleProject).put(updateProject);
 
-// // /api/thoughts/:thoughtId/reactions
-// router.route('/:thoughtId/reactions').post(addReaction)
+// /api/projects/:projectId/images
+router.route('/:projectId/images').post(addImage)
 
-// // /api/thoughts/:thoughtId/reactions/:reactionId
-// router.route('/:thoughtId/reactions/:reactionId').delete(removeReaction);
+// /api/projects/:projectId/images
+router.route('/:projectId/todos').post(addTodo)
+
+// /api/projects/:projectId/images
+router.route('/:projectId/steps').post(addStep)
+
+// // /api/projects/:projectId/reactions/:reactionId
+// router.route('/:projectId/reactions/:reactionId').delete(removeReaction);
 
 module.exports = router;

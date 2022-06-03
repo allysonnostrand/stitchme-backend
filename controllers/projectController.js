@@ -56,22 +56,6 @@ module.exports = {
             res.status(500).json(err);
           });
       },
-
-    // Delete a project and remove their projects
-    deleteProject(req, res) {
-      Project.findOneAndRemove({ _id: req.params.projectId })
-        .then((project) =>
-          !project
-            ? res.status(404).json({
-                message: 'project deleted',
-              })
-            : res.json({ message: 'project successfully deleted' })
-        )
-        .catch((err) => {
-          console.log(err);
-          res.status(500).json(err);
-        });
-    },
   
     // update a project
     updateProject(req, res) {
@@ -103,7 +87,7 @@ module.exports = {
           !image
             ? res
                 .status(404)
-                .json({ message: 'No image found with that ID :(' })
+                .json({ message: 'No project found with that ID :(' })
             : res.json(image)
         )
         .catch((err) => res.status(500).json(err));
@@ -123,7 +107,7 @@ module.exports = {
             !todo
               ? res
                   .status(404)
-                  .json({ message: 'No todo found with that ID :(' })
+                  .json({ message: 'No project found with that ID :(' })
               : res.json(todo)
           )
           .catch((err) => res.status(500).json(err));
@@ -143,7 +127,7 @@ module.exports = {
             !step
               ? res
                   .status(404)
-                  .json({ message: 'No step found with that ID :(' })
+                  .json({ message: 'No project found with that ID :(' })
               : res.json(step)
           )
           .catch((err) => res.status(500).json(err));
