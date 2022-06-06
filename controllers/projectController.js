@@ -6,10 +6,7 @@ module.exports = {
     getProjects(req, res) {
       Project.find()
         .then(async (projects) => {
-          const projectObj = {
-            projects
-          };
-          return res.json(projectObj);
+          return res.json(projects);
         })
         .catch((err) => {
           console.log(err);
