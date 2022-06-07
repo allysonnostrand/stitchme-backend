@@ -8,10 +8,7 @@ module.exports = {
     getUsers(req, res) {
       User.find()
         .then(async (users) => {
-          const userObj = {
-            users,
-          };
-          return res.json(userObj);
+          return res.json(users);
         })
         .catch((err) => {
           console.log(err);
@@ -19,6 +16,7 @@ module.exports = {
         });
     },
 
+    
     // Get a single user
     getSingleUser(req, res) {
       User.findOne({ _id: req.params.userId })
@@ -39,9 +37,20 @@ module.exports = {
 
     // create a new user
     createUser(req, res) {
-      User.create(req.body)
-        .then((user) => res.json(user))
-        .catch((err) => res.status(500).json(err));
+      User.create(req.body).then(newUser =>{
+        const token = jwt.sign({
+          userId:newUser.id
+      },process.env.JWT_SECRET,{
+          expiresIn: "2h"
+      })
+      res.json({
+          user:newUser,
+          token:token
+      })
+    }).catch(err =>{
+        console.log(err);
+        res.status(500).json({msg:"an error occured",err});
+      })
     },
 
     //login a user 
